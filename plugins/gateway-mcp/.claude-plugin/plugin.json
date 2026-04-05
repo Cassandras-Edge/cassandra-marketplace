@@ -1,0 +1,16 @@
+{
+  "name": "gateway-mcp",
+  "description": "Configures the Cassandra Gateway MCP (execute) and per-service discovery servers. Adds streamable-http MCP server configs to the project's .mcp.json.",
+  "version": "0.1.0",
+  "author": {
+    "name": "digibugcat"
+  },
+  "license": "MIT",
+  "keywords": ["mcp", "gateway", "execute", "config"],
+  "commands": {
+    "gateway-setup": {
+      "description": "Add Cassandra Gateway and discovery MCP servers to this project",
+      "command": "${CLAUDE_PLUGIN_ROOT}/scripts/setup.sh"
+    }
+  }
+}

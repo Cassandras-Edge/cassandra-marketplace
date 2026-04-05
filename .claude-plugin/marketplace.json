@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Plugins from the Cassandra platform",
-    "version": "0.2.0"
+    "version": "0.3.0"
   },
   "plugins": [
     {
@@ -15,6 +15,22 @@
       "version": "0.2.0",
       "category": "productivity",
       "keywords": ["hooks", "stop-gate", "agentic", "productivity"]
+    },
+    {
+      "name": "gateway-mcp",
+      "source": "./plugins/gateway-mcp",
+      "description": "Configures the Cassandra Gateway MCP (execute) and per-service discovery servers. Adds streamable-http MCP server configs to .mcp.json.",
+      "version": "0.1.0",
+      "category": "mcp",
+      "keywords": ["mcp", "gateway", "execute", "config"]
+    },
+    {
+      "name": "acl-lint",
+      "source": "./plugins/acl-lint",
+      "description": "Pre-tool hook that validates acl.yaml structure — catches bad service names, missing groups, invalid policy syntax before they hit production.",
+      "version": "0.1.0",
+      "category": "security",
+      "keywords": ["hooks", "acl", "validation", "security"]
     }
   ]
 }

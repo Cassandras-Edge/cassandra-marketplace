@@ -1,0 +1,25 @@
+{
+  "name": "acl-lint",
+  "description": "Pre-commit hook that validates acl.yaml structure — catches bad service names, missing groups, invalid policy syntax before they reach production.",
+  "version": "0.1.0",
+  "author": {
+    "name": "digibugcat"
+  },
+  "license": "MIT",
+  "keywords": ["hooks", "acl", "validation", "security"],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/lint-acl.sh",
+            "timeout": 10,
+            "statusMessage": "Validating ACL policy..."
+          }
+        ]
+      }
+    ]
+  }
+}
