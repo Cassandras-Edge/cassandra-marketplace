@@ -109,7 +109,7 @@ fi
 
 # ── Call classifier ─────────────────────────────────────────────────────────
 
-VERDICT=$(printf '%s\n%s' "$PROMPT" "$LAST_MSG" | "$CLAUDE" --bare --no-session-persistence -p --model haiku --settings "$SCRIPT_DIR/no-hooks-settings.json" 2>>"$LOG") || {
+VERDICT=$(printf '%s\n%s' "$PROMPT" "$LAST_MSG" | "$CLAUDE" --bare --no-session-persistence -p --model opus --settings "$SCRIPT_DIR/no-hooks-settings.json" 2>>"$LOG") || {
   log "verdict: APPROVE (claude call failed, allowing stop)"
   exit 0
 }
