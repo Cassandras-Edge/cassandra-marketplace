@@ -1,10 +1,17 @@
 {
   "name": "reddit-mcp",
-  "description": "Reddit — search, subreddit browsing, post + comment reading. No credentials needed. Read-only.",
-  "version": "0.1.0",
-  "author": {"name": "digibugcat"},
+  "description": "Reddit \u2014 search, subreddit browsing, post + comment reading. No credentials needed. Read-only.",
+  "version": "0.1.1",
+  "author": {
+    "name": "digibugcat"
+  },
   "license": "MIT",
-  "keywords": ["mcp", "reddit", "social", "research"],
+  "keywords": [
+    "mcp",
+    "reddit",
+    "social",
+    "research"
+  ],
   "mcpServers": {
     "reddit-mcp": {
       "type": "http",

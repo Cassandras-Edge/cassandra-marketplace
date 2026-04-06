@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Plugins from the Cassandra platform",
-    "version": "0.4.0"
+    "version": "0.5.0"
   },
   "plugins": [
     {
@@ -14,7 +14,11 @@
       "description": "Stop hook that blocks lazy stops and returns actionable directives.",
       "version": "0.2.0",
       "category": "productivity",
-      "keywords": ["hooks", "stop-gate", "agentic"]
+      "keywords": [
+        "hooks",
+        "stop-gate",
+        "agentic"
+      ]
     },
     {
       "name": "acl-lint",
@@ -22,79 +26,121 @@
       "description": "Pre-tool hook that validates acl.yaml structure on write/edit.",
       "version": "0.1.0",
       "category": "security",
-      "keywords": ["hooks", "acl", "validation"]
+      "keywords": [
+        "hooks",
+        "acl",
+        "validation"
+      ]
     },
     {
       "name": "gateway-mcp",
       "source": "./plugins/gateway-mcp",
-      "description": "Cassandra Gateway — execute any platform tool via sandboxed Python.",
-      "version": "0.1.0",
+      "description": "Cassandra Gateway \u2014 execute any platform tool via sandboxed Python.",
+      "version": "0.1.1",
       "category": "mcp",
-      "keywords": ["mcp", "gateway", "execute"]
+      "keywords": [
+        "mcp",
+        "gateway",
+        "execute"
+      ]
     },
     {
       "name": "market-research",
       "source": "./plugins/market-research",
-      "description": "Financial market data — stocks, SEC filings, macro, options, earnings.",
-      "version": "0.1.0",
+      "description": "Financial market data \u2014 stocks, SEC filings, macro, options, earnings.",
+      "version": "0.1.1",
       "category": "mcp",
-      "keywords": ["mcp", "finance", "stocks"]
+      "keywords": [
+        "mcp",
+        "finance",
+        "stocks"
+      ]
     },
     {
       "name": "twitter-mcp",
       "source": "./plugins/twitter-mcp",
-      "description": "Twitter/X — news search, Grok AI, post analytics, personal timeline.",
-      "version": "0.1.0",
+      "description": "Twitter/X \u2014 news search, Grok AI, post analytics, personal timeline.",
+      "version": "0.1.1",
       "category": "mcp",
-      "keywords": ["mcp", "twitter", "news"]
+      "keywords": [
+        "mcp",
+        "twitter",
+        "news"
+      ]
     },
     {
       "name": "reddit-mcp",
       "source": "./plugins/reddit-mcp",
-      "description": "Reddit — search, subreddit browsing, post + comment reading.",
-      "version": "0.1.0",
+      "description": "Reddit \u2014 search, subreddit browsing, post + comment reading.",
+      "version": "0.1.1",
       "category": "mcp",
-      "keywords": ["mcp", "reddit", "social"]
+      "keywords": [
+        "mcp",
+        "reddit",
+        "social"
+      ]
     },
     {
       "name": "claudeai-mcp",
       "source": "./plugins/claudeai-mcp",
-      "description": "claude.ai — conversations, projects, knowledge docs, artifacts.",
-      "version": "0.1.0",
+      "description": "claude.ai \u2014 conversations, projects, knowledge docs, artifacts.",
+      "version": "0.1.1",
       "category": "mcp",
-      "keywords": ["mcp", "claude", "conversations"]
+      "keywords": [
+        "mcp",
+        "claude",
+        "conversations"
+      ]
     },
     {
       "name": "discord-mcp",
       "source": "./plugins/discord-mcp",
-      "description": "Discord — search messages, read channels/threads/DMs, attachments.",
-      "version": "0.1.0",
+      "description": "Discord \u2014 search messages, read channels/threads/DMs, attachments.",
+      "version": "0.1.1",
       "category": "mcp",
-      "keywords": ["mcp", "discord", "chat"]
+      "keywords": [
+        "mcp",
+        "discord",
+        "chat"
+      ]
     },
     {
       "name": "media-mcp",
       "source": "./plugins/media-mcp",
-      "description": "YouTube/media — transcription, YouTube search, comments, Watch Later.",
-      "version": "0.1.0",
+      "description": "YouTube/media \u2014 transcription, YouTube search, comments, Watch Later.",
+      "version": "0.1.1",
       "category": "mcp",
-      "keywords": ["mcp", "youtube", "transcription"]
+      "keywords": [
+        "mcp",
+        "youtube",
+        "transcription"
+      ]
     },
     {
       "name": "gemini-mcp",
       "source": "./plugins/gemini-mcp",
-      "description": "Gemini — grounded web search and Q&A with stateful conversations.",
-      "version": "0.1.0",
+      "description": "Gemini \u2014 grounded web search and Q&A with stateful conversations.",
+      "version": "0.1.1",
       "category": "mcp",
-      "keywords": ["mcp", "gemini", "search", "research"]
+      "keywords": [
+        "mcp",
+        "gemini",
+        "search",
+        "research"
+      ]
     },
     {
       "name": "perplexity-mcp",
       "source": "./plugins/perplexity-mcp",
-      "description": "Perplexity — web search, grounded AI answers, step-by-step reasoning.",
-      "version": "0.1.0",
+      "description": "Perplexity \u2014 web search, grounded AI answers, step-by-step reasoning.",
+      "version": "0.1.1",
       "category": "mcp",
-      "keywords": ["mcp", "perplexity", "search", "research"]
+      "keywords": [
+        "mcp",
+        "perplexity",
+        "search",
+        "research"
+      ]
     }
   ]
 }

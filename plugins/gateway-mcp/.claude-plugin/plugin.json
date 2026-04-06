@@ -1,12 +1,16 @@
 {
   "name": "gateway-mcp",
-  "description": "Cassandra Gateway — execute any platform tool via sandboxed Python. Authenticates via WorkOS OAuth.",
-  "version": "0.1.0",
+  "description": "Cassandra Gateway \u2014 execute any platform tool via sandboxed Python. Authenticates via WorkOS OAuth.",
+  "version": "0.1.1",
   "author": {
     "name": "digibugcat"
   },
   "license": "MIT",
-  "keywords": ["mcp", "gateway", "execute"],
+  "keywords": [
+    "mcp",
+    "gateway",
+    "execute"
+  ],
   "mcpServers": {
     "cassandra-gateway": {
       "type": "http",
