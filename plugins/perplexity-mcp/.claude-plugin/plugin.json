@@ -1,0 +1,14 @@
+{
+  "name": "perplexity-mcp",
+  "description": "Perplexity — web search, grounded AI answers, step-by-step reasoning. No credentials needed.",
+  "version": "0.1.0",
+  "author": {"name": "digibugcat"},
+  "license": "MIT",
+  "keywords": ["mcp", "perplexity", "search", "research"],
+  "mcpServers": {
+    "perplexity-mcp": {
+      "type": "http",
+      "url": "https://perplexity.cassandrasedge.com/mcp"
+    }
+  }
+}

@@ -87,6 +87,14 @@
       "version": "0.1.0",
       "category": "mcp",
       "keywords": ["mcp", "gemini", "search", "research"]
+    },
+    {
+      "name": "perplexity-mcp",
+      "source": "./plugins/perplexity-mcp",
+      "description": "Perplexity — web search, grounded AI answers, step-by-step reasoning.",
+      "version": "0.1.0",
+      "category": "mcp",
+      "keywords": ["mcp", "perplexity", "search", "research"]
     }
   ]
 }
