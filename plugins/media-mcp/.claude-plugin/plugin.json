@@ -1,6 +1,6 @@
 {
   "name": "media-mcp",
-  "description": "YouTube/media — transcription (GPU ASR + diarization), YouTube search, channel browsing, comments, Watch Later sync.",
+  "description": "YouTube/media — transcription (GPU ASR + diarization), YouTube search, channel browsing, comments, Watch Later sync. Requires cass-cli plugin.",
   "version": "0.1.2",
   "author": {
     "name": "digibugcat"

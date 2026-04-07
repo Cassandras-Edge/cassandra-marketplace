@@ -1,6 +1,6 @@
 {
   "name": "claudeai-mcp",
-  "description": "claude.ai — conversations, projects, knowledge docs, artifacts. Read + write via synced browser cookies.",
+  "description": "claude.ai — conversations, projects, knowledge docs, artifacts. Read + write via synced browser cookies. Requires cass-cli plugin.",
   "version": "0.1.2",
   "author": {
     "name": "digibugcat"

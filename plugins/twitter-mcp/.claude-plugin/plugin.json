@@ -1,6 +1,6 @@
 {
   "name": "twitter-mcp",
-  "description": "Twitter/X — news search, Grok AI synthesis, post analytics, personal timeline, bookmarks. Read-only.",
+  "description": "Twitter/X — news search, Grok AI synthesis, post analytics, personal timeline, bookmarks. Read-only. Requires cass-cli plugin.",
   "version": "0.1.2",
   "author": {
     "name": "digibugcat"

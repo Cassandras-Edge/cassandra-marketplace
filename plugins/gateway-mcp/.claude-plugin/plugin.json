@@ -1,6 +1,6 @@
 {
   "name": "gateway-mcp",
-  "description": "Cassandra Gateway — execute any platform tool via sandboxed Python. Authenticates via WorkOS OAuth.",
+  "description": "Cassandra Gateway — execute any platform tool via sandboxed Python. Authenticates via WorkOS OAuth. Requires cass-cli plugin.",
   "version": "0.1.2",
   "author": {
     "name": "digibugcat"

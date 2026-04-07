@@ -1,6 +1,6 @@
 {
   "name": "gemini-mcp",
-  "description": "Gemini — grounded web search and Q&A with stateful conversations. Auto-searches Google when needed.",
+  "description": "Gemini — grounded web search and Q&A with stateful conversations. Auto-searches Google when needed. Requires cass-cli plugin.",
   "version": "0.1.2",
   "author": {
     "name": "digibugcat"

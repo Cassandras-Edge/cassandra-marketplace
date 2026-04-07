@@ -1,6 +1,6 @@
 {
   "name": "perplexity-mcp",
-  "description": "Perplexity — web search, grounded AI answers, step-by-step reasoning. No credentials needed.",
+  "description": "Perplexity — web search, grounded AI answers, step-by-step reasoning. No credentials needed. Requires cass-cli plugin.",
   "version": "0.1.2",
   "author": {
     "name": "digibugcat"

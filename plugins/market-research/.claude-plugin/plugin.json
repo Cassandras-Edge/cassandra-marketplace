@@ -1,6 +1,6 @@
 {
   "name": "market-research",
-  "description": "Financial market data — stocks, SEC filings, macro, options, earnings. Discovery + Code Mode execution via FMP, Polygon, FRED APIs.",
+  "description": "Financial market data — stocks, SEC filings, macro, options, earnings. Discovery + Code Mode execution via FMP, Polygon, FRED APIs. Requires cass-cli plugin.",
   "version": "0.1.2",
   "author": {
     "name": "digibugcat"

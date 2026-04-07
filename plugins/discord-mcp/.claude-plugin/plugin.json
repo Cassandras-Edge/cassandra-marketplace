@@ -1,6 +1,6 @@
 {
   "name": "discord-mcp",
-  "description": "Discord — search messages, read channels/threads/DMs, download attachments. Per-user bridge isolation. Read-only.",
+  "description": "Discord — search messages, read channels/threads/DMs, download attachments. Per-user bridge isolation. Read-only. Requires cass-cli plugin.",
   "version": "0.1.2",
   "author": {
     "name": "digibugcat"

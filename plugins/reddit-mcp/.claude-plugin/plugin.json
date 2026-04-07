@@ -1,6 +1,6 @@
 {
   "name": "reddit-mcp",
-  "description": "Reddit — search, subreddit browsing, post + comment reading. No credentials needed. Read-only.",
+  "description": "Reddit — search, subreddit browsing, post + comment reading. No credentials needed. Read-only. Requires cass-cli plugin.",
   "version": "0.1.2",
   "author": {
     "name": "digibugcat"
