@@ -130,16 +130,16 @@
       ]
     },
     {
-      "name": "cookie-sync",
-      "source": "./plugins/cookie-sync",
-      "description": "Auto-sync YouTube cookies from Firefox to auth service on session start.",
-      "version": "0.1.1",
+      "name": "cass-cli",
+      "source": "./plugins/cass-cli",
+      "description": "Cassandra platform CLI — device auth, cookie sync, MCP key management. Provides `cass` on PATH.",
+      "version": "0.1.0",
       "category": "productivity",
       "keywords": [
-        "hooks",
+        "cli",
+        "auth",
         "cookies",
-        "youtube",
-        "yt-dlp"
+        "keys"
       ]
     },
     {

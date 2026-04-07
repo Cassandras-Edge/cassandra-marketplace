@@ -1,0 +1,24 @@
+{
+  "name": "cass-cli",
+  "description": "Cassandra platform CLI — device auth, cookie sync, MCP key management. Provides the `cass` binary on PATH for all other plugins.",
+  "version": "0.1.0",
+  "author": {
+    "name": "digibugcat"
+  },
+  "license": "MIT",
+  "keywords": ["cli", "auth", "cookies", "keys"],
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-cass.sh",
+            "timeout": 30,
+            "statusMessage": "Ensuring cass CLI is installed..."
+          }
+        ]
+      }
+    ]
+  }
+}

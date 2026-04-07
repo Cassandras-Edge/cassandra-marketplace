@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Wrapper that delegates to the platform-specific cass binary in plugin data dir.
+# The SessionStart hook (ensure-cass.sh) downloads the binary on first run.
+
+REAL="${CLAUDE_PLUGIN_DATA}/bin/cass"
+
+if [ ! -x "$REAL" ]; then
+  echo "cass not installed yet — restart your session or run the ensure-cass hook" >&2
+  exit 1
+fi
+
+exec "$REAL" "$@"
