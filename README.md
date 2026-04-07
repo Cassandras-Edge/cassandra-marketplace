@@ -29,6 +29,7 @@ Available plugins:
 | `claudeai-mcp` | MCP | claude.ai — conversations, projects, knowledge docs, artifacts |
 | `discord-mcp` | MCP | Discord — search messages, read channels/threads/DMs, attachments |
 | `media-mcp` | MCP | YouTube/media — transcription, search, comments, Watch Later |
+| `cmux-mcp` | MCP (stdio) | cmux automation — spawn agents, send messages, read screens, search workspaces |
 
 ## Examples
 

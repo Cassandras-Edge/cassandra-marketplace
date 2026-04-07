@@ -1,0 +1,25 @@
+{
+  "name": "cmux-mcp",
+  "description": "cmux automation \u2014 spawn Claude Code sessions, send messages between agents, read screens, search workspaces. Local stdio server.",
+  "version": "0.3.0",
+  "author": {
+    "name": "digibugcat"
+  },
+  "license": "MIT",
+  "keywords": [
+    "mcp",
+    "cmux",
+    "terminal",
+    "multiplexer",
+    "agents",
+    "automation"
+  ],
+  "mcpServers": {
+    "cmux-mcp": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/dist/cmux-mcp.mjs"],
+      "env": {}
+    }
+  }
+}
