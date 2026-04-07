@@ -642,32 +642,6 @@ func main() {
 		server.WithToolCapabilities(false),
 	)
 
-	// list_hosts
-	s.AddTool(
-		mcp.NewTool("list_hosts",
-			mcp.WithDescription("List configured cmux hosts"),
-		),
-		func(_ context.Context, _ mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			type hostInfo struct {
-				Name string  `json:"name"`
-				Type string  `json:"type"`
-				SSH  *string `json:"ssh"`
-			}
-			var out []hostInfo
-			for name, cfg := range hosts {
-				t := "local"
-				var ssh *string
-				if cfg.SSH != "" {
-					t = "remote"
-					s := cfg.SSH
-					ssh = &s
-				}
-				out = append(out, hostInfo{Name: name, Type: t, SSH: ssh})
-			}
-			return jsonResult(out), nil
-		},
-	)
-
 	// list_sessions
 	s.AddTool(
 		mcp.NewTool("list_sessions",
