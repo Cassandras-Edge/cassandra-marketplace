@@ -178,6 +178,251 @@ func getMyWorkspaceRef() string {
 	return "unknown"
 }
 
+// --- Tags (in-memory + file-backed) ---
+
+var (
+	tags   map[string]map[string]bool // tag -> set of workspace refs
+	tagsMu sync.RWMutex
+)
+
+const tagsFile = "/tmp/cmux-mcp-tags.json"
+
+func loadTags() {
+	tags = make(map[string]map[string]bool)
+	data, err := os.ReadFile(tagsFile)
+	if err != nil {
+		return
+	}
+	var stored map[string][]string
+	if err := json.Unmarshal(data, &stored); err != nil {
+		return
+	}
+	for tag, refs := range stored {
+		tags[tag] = make(map[string]bool)
+		for _, ref := range refs {
+			tags[tag][ref] = true
+		}
+	}
+}
+
+func saveTags() {
+	stored := make(map[string][]string)
+	for tag, refs := range tags {
+		for ref := range refs {
+			stored[tag] = append(stored[tag], ref)
+		}
+	}
+	data, _ := json.MarshalIndent(stored, "", "  ")
+	os.WriteFile(tagsFile, data, 0644)
+}
+
+func addTag(tag, wsRef string) {
+	tagsMu.Lock()
+	defer tagsMu.Unlock()
+	if tags[tag] == nil {
+		tags[tag] = make(map[string]bool)
+	}
+	tags[tag][wsRef] = true
+	saveTags()
+}
+
+func removeTag(tag, wsRef string) {
+	tagsMu.Lock()
+	defer tagsMu.Unlock()
+	if tags[tag] != nil {
+		delete(tags[tag], wsRef)
+		if len(tags[tag]) == 0 {
+			delete(tags, tag)
+		}
+	}
+	saveTags()
+}
+
+func getTaggedWorkspaces(tag string) []string {
+	tagsMu.RLock()
+	defer tagsMu.RUnlock()
+	var refs []string
+	for ref := range tags[tag] {
+		refs = append(refs, ref)
+	}
+	return refs
+}
+
+func getAllTags() map[string][]string {
+	tagsMu.RLock()
+	defer tagsMu.RUnlock()
+	result := make(map[string][]string)
+	for tag, refs := range tags {
+		for ref := range refs {
+			result[tag] = append(result[tag], ref)
+		}
+	}
+	return result
+}
+
+// --- Tree parsing ---
+
+type parsedWorkspace struct {
+	Ref      string
+	Title    string
+	Window   string
+	Surfaces []parsedSurface
+}
+
+type parsedSurface struct {
+	Ref   string
+	Type  string // "terminal" or "browser"
+	Title string
+}
+
+var (
+	wsLineRe   = regexp.MustCompile(`workspace (workspace:\d+)\s+"([^"]*)"`)
+	surfLineRe = regexp.MustCompile(`surface (surface:\d+)\s+\[(terminal|browser)\]\s+"([^"]*)"`)
+	winLineRe  = regexp.MustCompile(`^window (window:\d+)`)
+)
+
+func parseTree(treeOutput string) []parsedWorkspace {
+	var workspaces []parsedWorkspace
+	var currentWin string
+	var currentWS *parsedWorkspace
+
+	for _, line := range strings.Split(treeOutput, "\n") {
+		if m := winLineRe.FindStringSubmatch(line); len(m) > 1 {
+			currentWin = m[1]
+			continue
+		}
+		if m := wsLineRe.FindStringSubmatch(line); len(m) > 2 {
+			if currentWS != nil {
+				workspaces = append(workspaces, *currentWS)
+			}
+			currentWS = &parsedWorkspace{
+				Ref:    m[1],
+				Title:  m[2],
+				Window: currentWin,
+			}
+			continue
+		}
+		if m := surfLineRe.FindStringSubmatch(line); len(m) > 3 && currentWS != nil {
+			currentWS.Surfaces = append(currentWS.Surfaces, parsedSurface{
+				Ref:   m[1],
+				Type:  m[2],
+				Title: m[3],
+			})
+		}
+	}
+	if currentWS != nil {
+		workspaces = append(workspaces, *currentWS)
+	}
+	return workspaces
+}
+
+func filterWorkspaces(workspaces []parsedWorkspace, pattern, tag, window, surfaceType string) []parsedWorkspace {
+	var result []parsedWorkspace
+
+	// Get tagged refs if tag filter specified
+	var taggedRefs map[string]bool
+	if tag != "" {
+		taggedRefs = make(map[string]bool)
+		for _, ref := range getTaggedWorkspaces(tag) {
+			taggedRefs[ref] = true
+		}
+	}
+
+	var patternRe *regexp.Regexp
+	if pattern != "" {
+		patternRe, _ = regexp.Compile("(?i)" + pattern)
+	}
+
+	for _, ws := range workspaces {
+		// Tag filter
+		if taggedRefs != nil && !taggedRefs[ws.Ref] {
+			continue
+		}
+		// Window filter
+		if window != "" && ws.Window != window {
+			continue
+		}
+		// Pattern filter — match on workspace title or any surface title
+		if patternRe != nil {
+			matched := patternRe.MatchString(ws.Title)
+			if !matched {
+				for _, s := range ws.Surfaces {
+					if patternRe.MatchString(s.Title) {
+						matched = true
+						break
+					}
+				}
+			}
+			if !matched {
+				continue
+			}
+		}
+		// Surface type filter — only include if workspace has at least one matching surface
+		if surfaceType != "" {
+			hasType := false
+			for _, s := range ws.Surfaces {
+				if s.Type == surfaceType {
+					hasType = true
+					break
+				}
+			}
+			if !hasType {
+				continue
+			}
+		}
+		result = append(result, ws)
+	}
+	return result
+}
+
+// Send text to a workspace, targeting terminal surfaces
+func sendToWorkspace(ws parsedWorkspace, text string, host string) error {
+	// Find first terminal surface
+	var targetSurf string
+	for _, s := range ws.Surfaces {
+		if s.Type == "terminal" {
+			targetSurf = s.Ref
+			break
+		}
+	}
+
+	args := []string{"send", "--workspace", ws.Ref}
+	if targetSurf != "" {
+		args = append(args, "--surface", targetSurf)
+	}
+	args = append(args, text)
+	if _, err := cmuxExec(args, host); err != nil {
+		return err
+	}
+
+	keyArgs := []string{"send-key", "--workspace", ws.Ref}
+	if targetSurf != "" {
+		keyArgs = append(keyArgs, "--surface", targetSurf)
+	}
+	keyArgs = append(keyArgs, "Enter")
+	cmuxExec(keyArgs, host)
+	return nil
+}
+
+// Send key to a workspace, targeting terminal surfaces
+func sendKeyToWorkspace(ws parsedWorkspace, key string, host string) error {
+	var targetSurf string
+	for _, s := range ws.Surfaces {
+		if s.Type == "terminal" {
+			targetSurf = s.Ref
+			break
+		}
+	}
+
+	args := []string{"send-key", "--workspace", ws.Ref}
+	if targetSurf != "" {
+		args = append(args, "--surface", targetSurf)
+	}
+	args = append(args, key)
+	_, err := cmuxExec(args, host)
+	return err
+}
+
 // --- Helpers ---
 
 func textResult(s string) *mcp.CallToolResult {
@@ -211,10 +456,11 @@ func optInt(req mcp.CallToolRequest, key string) int {
 
 func main() {
 	loadHosts()
+	loadTags()
 
 	s := server.NewMCPServer(
 		"cmux-mcp",
-		"0.4.0",
+		"0.5.0",
 		server.WithToolCapabilities(false),
 	)
 
@@ -589,6 +835,241 @@ func main() {
 				return cmuxExec(findArgs(h), h)
 			})
 			return jsonResult(results), nil
+		},
+	)
+
+	// tag_session
+	s.AddTool(
+		mcp.NewTool("tag_session",
+			mcp.WithDescription("Add a tag to a workspace for group targeting. Tags persist across calls via /tmp/cmux-mcp-tags.json."),
+			mcp.WithString("workspace", mcp.Required(), mcp.Description("Workspace ref (e.g. workspace:1)")),
+			mcp.WithString("tag", mcp.Required(), mcp.Description("Tag name (e.g. research, finance, infra)")),
+		),
+		func(_ context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+			ws, err := req.RequireString("workspace")
+			if err != nil {
+				return mcp.NewToolResultError(err.Error()), nil
+			}
+			tag, err := req.RequireString("tag")
+			if err != nil {
+				return mcp.NewToolResultError(err.Error()), nil
+			}
+			addTag(tag, ws)
+			return textResult(fmt.Sprintf("Tagged %s with %q.", ws, tag)), nil
+		},
+	)
+
+	// untag_session
+	s.AddTool(
+		mcp.NewTool("untag_session",
+			mcp.WithDescription("Remove a tag from a workspace."),
+			mcp.WithString("workspace", mcp.Required(), mcp.Description("Workspace ref (e.g. workspace:1)")),
+			mcp.WithString("tag", mcp.Required(), mcp.Description("Tag to remove")),
+		),
+		func(_ context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+			ws, err := req.RequireString("workspace")
+			if err != nil {
+				return mcp.NewToolResultError(err.Error()), nil
+			}
+			tag, err := req.RequireString("tag")
+			if err != nil {
+				return mcp.NewToolResultError(err.Error()), nil
+			}
+			removeTag(tag, ws)
+			return textResult(fmt.Sprintf("Removed tag %q from %s.", tag, ws)), nil
+		},
+	)
+
+	// list_tags
+	s.AddTool(
+		mcp.NewTool("list_tags",
+			mcp.WithDescription("List all tags and their associated workspace refs."),
+		),
+		func(_ context.Context, _ mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+			all := getAllTags()
+			if len(all) == 0 {
+				return textResult("No tags defined."), nil
+			}
+			return jsonResult(all), nil
+		},
+	)
+
+	// broadcast
+	s.AddTool(
+		mcp.NewTool("broadcast",
+			mcp.WithDescription(`Send a message to multiple workspaces at once. Filter by any combination of:
+- pattern: regex matched against workspace and surface titles
+- tag: only workspaces with this tag (set via tag_session)
+- window: only workspaces in this window ref
+- surface_type: only workspaces containing this surface type (terminal or browser)
+Targets terminal surfaces by default. Automatically prefixes with sender identity.`),
+			mcp.WithString("text", mcp.Required(), mcp.Description("Message to send")),
+			mcp.WithString("pattern", mcp.Description("Regex pattern to match workspace/surface titles")),
+			mcp.WithString("tag", mcp.Description("Only send to workspaces with this tag")),
+			mcp.WithString("window", mcp.Description("Only send to workspaces in this window ref")),
+			mcp.WithString("surface_type", mcp.Description("Only target workspaces with this surface type"), mcp.Enum("terminal", "browser")),
+			mcp.WithString("host", mcp.Description("Host name. Defaults to 'local'.")),
+			mcp.WithBoolean("exclude_self", mcp.Description("Exclude the sender's own workspace (default true)")),
+		),
+		func(_ context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+			text, err := req.RequireString("text")
+			if err != nil {
+				return mcp.NewToolResultError(err.Error()), nil
+			}
+			pattern := optString(req, "pattern")
+			tag := optString(req, "tag")
+			window := optString(req, "window")
+			surfType := optString(req, "surface_type")
+			host := optString(req, "host")
+
+			// Default exclude_self to true
+			excludeSelf := true
+			args := req.GetArguments()
+			if v, ok := args["exclude_self"]; ok {
+				if b, ok := v.(bool); ok {
+					excludeSelf = b
+				}
+			}
+
+			// Must have at least one filter
+			if pattern == "" && tag == "" && window == "" {
+				return mcp.NewToolResultError("At least one filter required: pattern, tag, or window."), nil
+			}
+
+			treeOut, err := cmuxExec([]string{"tree", "--all"}, host)
+			if err != nil {
+				return mcp.NewToolResultError(err.Error()), nil
+			}
+
+			workspaces := parseTree(treeOut)
+			filtered := filterWorkspaces(workspaces, pattern, tag, window, surfType)
+
+			myRef := getMyWorkspaceRef()
+			message := fmt.Sprintf("[from %s] %s", myRef, text)
+
+			var sent []string
+			var errors []string
+			var mu sync.Mutex
+			var wg sync.WaitGroup
+
+			for _, ws := range filtered {
+				if excludeSelf && ws.Ref == myRef {
+					continue
+				}
+				wg.Add(1)
+				go func(w parsedWorkspace) {
+					defer wg.Done()
+					if err := sendToWorkspace(w, message, host); err != nil {
+						mu.Lock()
+						errors = append(errors, fmt.Sprintf("%s: %s", w.Ref, err.Error()))
+						mu.Unlock()
+					} else {
+						mu.Lock()
+						sent = append(sent, fmt.Sprintf("%s (%s)", w.Ref, w.Title))
+						mu.Unlock()
+					}
+				}(ws)
+			}
+			wg.Wait()
+
+			var lines []string
+			lines = append(lines, fmt.Sprintf("Broadcast to %d workspace(s):", len(sent)))
+			for _, s := range sent {
+				lines = append(lines, "  "+s)
+			}
+			if len(errors) > 0 {
+				lines = append(lines, fmt.Sprintf("Errors (%d):", len(errors)))
+				for _, e := range errors {
+					lines = append(lines, "  "+e)
+				}
+			}
+			return textResult(strings.Join(lines, "\n")), nil
+		},
+	)
+
+	// broadcast_key
+	s.AddTool(
+		mcp.NewTool("broadcast_key",
+			mcp.WithDescription(`Send a key press to multiple workspaces at once. Same filtering as broadcast.
+Common use: send ctrl-c to stop all agents, Escape to cancel prompts.`),
+			mcp.WithString("key", mcp.Required(), mcp.Description("Key to send (e.g. Enter, Escape, ctrl-c)")),
+			mcp.WithString("pattern", mcp.Description("Regex pattern to match workspace/surface titles")),
+			mcp.WithString("tag", mcp.Description("Only send to workspaces with this tag")),
+			mcp.WithString("window", mcp.Description("Only send to workspaces in this window ref")),
+			mcp.WithString("surface_type", mcp.Description("Only target workspaces with this surface type"), mcp.Enum("terminal", "browser")),
+			mcp.WithString("host", mcp.Description("Host name. Defaults to 'local'.")),
+			mcp.WithBoolean("exclude_self", mcp.Description("Exclude the sender's own workspace (default true)")),
+		),
+		func(_ context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+			key, err := req.RequireString("key")
+			if err != nil {
+				return mcp.NewToolResultError(err.Error()), nil
+			}
+			pattern := optString(req, "pattern")
+			tag := optString(req, "tag")
+			window := optString(req, "window")
+			surfType := optString(req, "surface_type")
+			host := optString(req, "host")
+
+			excludeSelf := true
+			args := req.GetArguments()
+			if v, ok := args["exclude_self"]; ok {
+				if b, ok := v.(bool); ok {
+					excludeSelf = b
+				}
+			}
+
+			if pattern == "" && tag == "" && window == "" {
+				return mcp.NewToolResultError("At least one filter required: pattern, tag, or window."), nil
+			}
+
+			treeOut, err := cmuxExec([]string{"tree", "--all"}, host)
+			if err != nil {
+				return mcp.NewToolResultError(err.Error()), nil
+			}
+
+			workspaces := parseTree(treeOut)
+			filtered := filterWorkspaces(workspaces, pattern, tag, window, surfType)
+
+			myRef := getMyWorkspaceRef()
+
+			var sent []string
+			var errors []string
+			var mu sync.Mutex
+			var wg sync.WaitGroup
+
+			for _, ws := range filtered {
+				if excludeSelf && ws.Ref == myRef {
+					continue
+				}
+				wg.Add(1)
+				go func(w parsedWorkspace) {
+					defer wg.Done()
+					if err := sendKeyToWorkspace(w, key, host); err != nil {
+						mu.Lock()
+						errors = append(errors, fmt.Sprintf("%s: %s", w.Ref, err.Error()))
+						mu.Unlock()
+					} else {
+						mu.Lock()
+						sent = append(sent, fmt.Sprintf("%s (%s)", w.Ref, w.Title))
+						mu.Unlock()
+					}
+				}(ws)
+			}
+			wg.Wait()
+
+			var lines []string
+			lines = append(lines, fmt.Sprintf("Sent key %q to %d workspace(s):", key, len(sent)))
+			for _, s := range sent {
+				lines = append(lines, "  "+s)
+			}
+			if len(errors) > 0 {
+				lines = append(lines, fmt.Sprintf("Errors (%d):", len(errors)))
+				for _, e := range errors {
+					lines = append(lines, "  "+e)
+				}
+			}
+			return textResult(strings.Join(lines, "\n")), nil
 		},
 	)
 
