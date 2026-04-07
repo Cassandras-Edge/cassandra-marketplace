@@ -1,7 +1,7 @@
 {
   "name": "perplexity-mcp",
-  "description": "Perplexity \u2014 web search, grounded AI answers, step-by-step reasoning. No credentials needed.",
-  "version": "0.1.1",
+  "description": "Perplexity — web search, grounded AI answers, step-by-step reasoning. No credentials needed.",
+  "version": "0.1.2",
   "author": {
     "name": "digibugcat"
   },
@@ -15,7 +15,8 @@
   "mcpServers": {
     "perplexity-mcp": {
       "type": "http",
-      "url": "https://perplexity.cassandrasedge.com/mcp"
+      "url": "https://perplexity.cassandrasedge.com/mcp",
+      "headersHelper": "cass ensure-key --header perplexity-mcp"
     }
   }
 }

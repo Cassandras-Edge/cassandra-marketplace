@@ -1,7 +1,7 @@
 {
   "name": "reddit-mcp",
-  "description": "Reddit \u2014 search, subreddit browsing, post + comment reading. No credentials needed. Read-only.",
-  "version": "0.1.1",
+  "description": "Reddit — search, subreddit browsing, post + comment reading. No credentials needed. Read-only.",
+  "version": "0.1.2",
   "author": {
     "name": "digibugcat"
   },
@@ -15,7 +15,8 @@
   "mcpServers": {
     "reddit-mcp": {
       "type": "http",
-      "url": "https://reddit.cassandrasedge.com/mcp"
+      "url": "https://reddit.cassandrasedge.com/mcp",
+      "headersHelper": "cass ensure-key --header reddit-mcp"
     }
   }
 }

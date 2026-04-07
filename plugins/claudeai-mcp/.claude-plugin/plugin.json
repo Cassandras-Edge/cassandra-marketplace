@@ -1,7 +1,7 @@
 {
   "name": "claudeai-mcp",
-  "description": "claude.ai \u2014 conversations, projects, knowledge docs, artifacts. Read + write via synced browser cookies.",
-  "version": "0.1.1",
+  "description": "claude.ai — conversations, projects, knowledge docs, artifacts. Read + write via synced browser cookies.",
+  "version": "0.1.2",
   "author": {
     "name": "digibugcat"
   },
@@ -15,7 +15,8 @@
   "mcpServers": {
     "claudeai-mcp": {
       "type": "http",
-      "url": "https://claude-ai.cassandrasedge.com/mcp"
+      "url": "https://claude-ai.cassandrasedge.com/mcp",
+      "headersHelper": "cass ensure-key --header claudeai-mcp"
     }
   }
 }

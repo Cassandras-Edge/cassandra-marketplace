@@ -1,7 +1,7 @@
 {
   "name": "gateway-mcp",
-  "description": "Cassandra Gateway \u2014 execute any platform tool via sandboxed Python. Authenticates via WorkOS OAuth.",
-  "version": "0.1.1",
+  "description": "Cassandra Gateway — execute any platform tool via sandboxed Python. Authenticates via WorkOS OAuth.",
+  "version": "0.1.2",
   "author": {
     "name": "digibugcat"
   },
@@ -14,7 +14,8 @@
   "mcpServers": {
     "cassandra-gateway": {
       "type": "http",
-      "url": "https://gateway.cassandrasedge.com/mcp"
+      "url": "https://gateway.cassandrasedge.com/mcp",
+      "headersHelper": "cass ensure-key --header gateway"
     }
   }
 }

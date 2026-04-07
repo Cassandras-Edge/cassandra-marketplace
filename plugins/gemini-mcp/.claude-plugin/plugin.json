@@ -1,7 +1,7 @@
 {
   "name": "gemini-mcp",
-  "description": "Gemini \u2014 grounded web search and Q&A with stateful conversations. Auto-searches Google when needed.",
-  "version": "0.1.1",
+  "description": "Gemini — grounded web search and Q&A with stateful conversations. Auto-searches Google when needed.",
+  "version": "0.1.2",
   "author": {
     "name": "digibugcat"
   },
@@ -16,7 +16,8 @@
   "mcpServers": {
     "gemini-mcp": {
       "type": "http",
-      "url": "https://gemini.cassandrasedge.com/mcp"
+      "url": "https://gemini.cassandrasedge.com/mcp",
+      "headersHelper": "cass ensure-key --header gemini-mcp"
     }
   }
 }

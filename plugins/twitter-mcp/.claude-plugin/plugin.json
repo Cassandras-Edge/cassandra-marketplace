@@ -1,7 +1,7 @@
 {
   "name": "twitter-mcp",
-  "description": "Twitter/X \u2014 news search, Grok AI synthesis, post analytics, personal timeline, bookmarks. Read-only.",
-  "version": "0.1.1",
+  "description": "Twitter/X — news search, Grok AI synthesis, post analytics, personal timeline, bookmarks. Read-only.",
+  "version": "0.1.2",
   "author": {
     "name": "digibugcat"
   },
@@ -16,7 +16,8 @@
   "mcpServers": {
     "twitter-mcp": {
       "type": "http",
-      "url": "https://twitter-mcp.cassandrasedge.com/mcp"
+      "url": "https://twitter-mcp.cassandrasedge.com/mcp",
+      "headersHelper": "cass ensure-key --header twitter-mcp"
     }
   }
 }

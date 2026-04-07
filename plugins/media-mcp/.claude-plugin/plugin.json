@@ -1,7 +1,7 @@
 {
   "name": "media-mcp",
-  "description": "YouTube/media \u2014 transcription (GPU ASR + diarization), YouTube search, channel browsing, comments, Watch Later sync.",
-  "version": "0.1.1",
+  "description": "YouTube/media — transcription (GPU ASR + diarization), YouTube search, channel browsing, comments, Watch Later sync.",
+  "version": "0.1.2",
   "author": {
     "name": "digibugcat"
   },
@@ -15,7 +15,8 @@
   "mcpServers": {
     "yt-mcp": {
       "type": "http",
-      "url": "https://youtube.cassandrasedge.com/mcp"
+      "url": "https://youtube.cassandrasedge.com/mcp",
+      "headersHelper": "cass ensure-key --header yt-mcp"
     }
   }
 }
