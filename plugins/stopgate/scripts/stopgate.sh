@@ -79,6 +79,11 @@ CLASSIFY
 # ── Find claude binary ─────────────────────────────────────────────────────
 
 CLAUDE="${STOPGATE_CLAUDE_PATH:-}"
+# Prefer the cass-installed patched CLI — it's the only path that works with
+# OAuth in --bare mode. Install via: cass patched-cli install
+if [ -z "$CLAUDE" ] && [ -x "$HOME/.local/bin/claude-patched" ]; then
+  CLAUDE="$HOME/.local/bin/claude-patched"
+fi
 if [ -z "$CLAUDE" ]; then
   CLAUDE=$(command -v claude 2>/dev/null || true)
 fi
