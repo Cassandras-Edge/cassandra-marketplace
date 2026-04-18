@@ -1,7 +1,7 @@
 {
   "name": "media-mcp",
   "description": "YouTube/media \u2014 transcription (GPU ASR + diarization), YouTube search, channel browsing, comments, Watch Later sync.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": {
     "name": "digibugcat"
   },
@@ -27,6 +27,11 @@
             "type": "command",
             "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-cass.sh",
             "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-cookies.sh yt-mcp",
+            "timeout": 10
           }
         ]
       }

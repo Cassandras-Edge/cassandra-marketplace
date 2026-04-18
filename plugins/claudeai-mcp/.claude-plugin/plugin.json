@@ -1,7 +1,7 @@
 {
   "name": "claudeai-mcp",
   "description": "claude.ai \u2014 conversations, projects, knowledge docs, artifacts. Read + write via synced browser cookies.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": {
     "name": "digibugcat"
   },
@@ -27,6 +27,11 @@
             "type": "command",
             "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-cass.sh",
             "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-cookies.sh claude-ai",
+            "timeout": 10
           }
         ]
       }
