@@ -1,7 +1,7 @@
 {
   "name": "reddit-mcp",
-  "description": "Reddit — search, subreddit browsing, post + comment reading. No credentials needed. Read-only. Requires cass-cli plugin.",
-  "version": "0.1.2",
+  "description": "Reddit \u2014 search, subreddit browsing, post + comment reading. No credentials needed. Read-only.",
+  "version": "0.1.3",
   "author": {
     "name": "digibugcat"
   },
@@ -18,5 +18,18 @@
       "url": "https://reddit.cassandrasedge.com/mcp",
       "headersHelper": "cass ensure-key --header reddit-mcp"
     }
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-cass.sh",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "discord-mcp",
-  "description": "Discord — search messages, read channels/threads/DMs, download attachments. Per-user bridge isolation. Read-only. Requires cass-cli plugin.",
-  "version": "0.1.2",
+  "description": "Discord \u2014 search messages, read channels/threads/DMs, download attachments. Per-user bridge isolation. Read-only.",
+  "version": "0.1.3",
   "author": {
     "name": "digibugcat"
   },
@@ -18,5 +18,18 @@
       "url": "https://discord-mcp.cassandrasedge.com/mcp",
       "headersHelper": "cass ensure-key --header discord-mcp"
     }
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-cass.sh",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
   }
 }
