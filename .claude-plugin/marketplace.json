@@ -60,7 +60,7 @@
       "name": "twitter-mcp",
       "source": "./plugins/twitter-mcp",
       "description": "Twitter/X \u2014 news search, Grok AI, post analytics, personal timeline.",
-      "version": "0.1.4",
+      "version": "0.1.5",
       "category": "mcp",
       "keywords": [
         "mcp",
@@ -84,7 +84,7 @@
       "name": "claudeai-mcp",
       "source": "./plugins/claudeai-mcp",
       "description": "claude.ai \u2014 conversations, projects, knowledge docs, artifacts.",
-      "version": "0.1.4",
+      "version": "0.1.5",
       "category": "mcp",
       "keywords": [
         "mcp",
@@ -108,7 +108,7 @@
       "name": "media-mcp",
       "source": "./plugins/media-mcp",
       "description": "YouTube/media \u2014 transcription, YouTube search, comments, Watch Later.",
-      "version": "0.1.4",
+      "version": "0.1.5",
       "category": "mcp",
       "keywords": [
         "mcp",
