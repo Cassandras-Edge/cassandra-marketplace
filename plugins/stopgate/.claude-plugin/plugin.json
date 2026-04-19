@@ -1,7 +1,7 @@
 {
   "name": "stopgate",
   "description": "Stop hook that blocks lazy stops and returns actionable directives. Uses an Opus LLM call to classify whether the assistant actually finished its task.",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": {
     "name": "digibugcat"
   },

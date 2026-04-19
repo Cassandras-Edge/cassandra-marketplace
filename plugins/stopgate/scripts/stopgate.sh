@@ -60,6 +60,7 @@ BLOCK when:
 - The assistant pushed code or triggered a build but didn't monitor it to completion
 - The assistant told the user to wait for something async instead of watching it — set up a polling loop or background monitor instead of telling the user to check later
 - The assistant said "once X finishes", "when the pipeline completes", "after deploy" or similar future-dependent language without setting up monitoring to watch for that event
+- The assistant announced a next step without doing it — "Ready to continue with X", "Next up: X", "Now I'll do X", "Let's move on to X", or any forward-looking self-handoff is a stall; just start X
 - The assistant stopped mid-task or trailed off with filler
 
 When you BLOCK, your response becomes the instruction the assistant sees. Be direct and actionable — tell it exactly what to do next. The user can always interrupt if they disagree, so bias toward action.
@@ -70,6 +71,7 @@ Examples:
 - BLOCK Go ahead and build the Chrome extension. Start with the manifest and cookie listener.
 - BLOCK Monitor the Woodpecker pipelines and confirm all pods are running before stopping.
 - BLOCK You described the fix but didn't implement it. Make the change now.
+- BLOCK You finished the namespace migration but signed off with "Ready to continue with the per-vault E2EE field" — don't stop, just start the E2EE field now.
 - APPROVE (answered the user's question with concrete information)
 - APPROVE (genuine architectural decision — per-service vs centralized discovery changes the whole system shape)
 
