@@ -1,7 +1,7 @@
 {
   "name": "claudeai-mcp",
   "description": "claude.ai \u2014 conversations, projects, knowledge docs, artifacts. Read + write via synced browser cookies.",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "author": {
     "name": "digibugcat"
   },

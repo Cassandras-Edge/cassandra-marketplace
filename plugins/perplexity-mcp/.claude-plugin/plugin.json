@@ -1,7 +1,7 @@
 {
   "name": "perplexity-mcp",
   "description": "Perplexity \u2014 web search, grounded AI answers, step-by-step reasoning. No credentials needed.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": {
     "name": "digibugcat"
   },

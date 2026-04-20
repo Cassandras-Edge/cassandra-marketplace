@@ -1,7 +1,7 @@
 {
   "name": "reddit-mcp",
   "description": "Reddit \u2014 search, subreddit browsing, post + comment reading. No credentials needed. Read-only.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": {
     "name": "digibugcat"
   },

@@ -1,7 +1,7 @@
 {
   "name": "discord-mcp",
   "description": "Discord \u2014 search messages, read channels/threads/DMs, download attachments. Per-user bridge isolation. Read-only.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": {
     "name": "digibugcat"
   },

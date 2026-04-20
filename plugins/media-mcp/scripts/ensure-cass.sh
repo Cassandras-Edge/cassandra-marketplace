@@ -1,23 +1,48 @@
 #!/usr/bin/env bash
-# Ensure the `cass` binary is on PATH. Downloads the latest release into
-# this plugin's data dir on first run, then Claude Code auto-adds that
-# dir to PATH for subsequent plugin commands (including MCP headersHelper).
+# Ensure a current `cass` binary is available. Version-gates against the
+# latest GitHub release — if no cass is on PATH (or it reports an older
+# version), download the latest into this plugin's data dir. Claude Code
+# adds that dir to PATH for subsequent plugin commands including the MCP
+# headersHelper.
 #
-# Idempotent: exits 0 when cass is already available or the latest version
-# is already installed. Fails soft (exits 0 with a warning) on download
-# errors so plugin activation isn't blocked.
+# cass itself also self-updates on every invocation (rate-limited to 1h),
+# so a stale install on the user's PATH will heal on next real command.
+# This script catches the case where cass is missing entirely OR a stale
+# install is lying about its version (pre-0.6.6 binaries hard-coded the
+# version string and never updated it on release).
+#
+# Fails soft (exits 0 with a warning) on any error so plugin activation
+# is never blocked.
 
 set -euo pipefail
-
-# Already on PATH? Nothing to do.
-if command -v cass >/dev/null 2>&1; then
-  exit 0
-fi
 
 CASS_REPO="Cassandras-Edge/cass"
 BIN_DIR="${CLAUDE_PLUGIN_DATA:-$HOME/.local/share/cass-bootstrap}/bin"
 CASS_BIN="${BIN_DIR}/cass"
 VERSION_FILE="${BIN_DIR}/.cass-version"
+
+LATEST=$(curl -sSL --max-time 10 \
+  "https://api.github.com/repos/${CASS_REPO}/releases/latest" \
+  | grep '"tag_name"' | head -1 | cut -d'"' -f4)
+if [ -z "$LATEST" ]; then
+  echo "cass bootstrap: failed to fetch latest version — skipping" >&2
+  exit 0
+fi
+LATEST_NOV="${LATEST#v}"
+
+# If any cass on PATH already reports the latest version, nothing to do.
+# Parses output like "cass, version 0.6.6" -> "0.6.6".
+if command -v cass >/dev/null 2>&1; then
+  INSTALLED=$(cass --version 2>/dev/null | awk '{print $NF}' | tr -d ',')
+  if [ "$INSTALLED" = "$LATEST_NOV" ]; then
+    exit 0
+  fi
+fi
+
+# Skip download if our plugin-data binary is already at latest.
+if [ -x "$CASS_BIN" ] && [ -f "$VERSION_FILE" ] && [ "$(cat "$VERSION_FILE")" = "$LATEST" ]; then
+  exit 0
+fi
 
 OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
 ARCH="$(uname -m)"
@@ -36,19 +61,6 @@ esac
 
 TARGET="${OS}-${ARCH}"
 ASSET="cass-${TARGET}"
-
-LATEST=$(curl -sSL --max-time 10 \
-  "https://api.github.com/repos/${CASS_REPO}/releases/latest" \
-  | grep '"tag_name"' | head -1 | cut -d'"' -f4)
-if [ -z "$LATEST" ]; then
-  echo "cass bootstrap: failed to fetch latest version" >&2
-  exit 0
-fi
-
-if [ -x "$CASS_BIN" ] && [ -f "$VERSION_FILE" ] && [ "$(cat "$VERSION_FILE")" = "$LATEST" ]; then
-  exit 0
-fi
-
 URL="https://github.com/${CASS_REPO}/releases/download/${LATEST}/${ASSET}"
 echo "Installing cass ${LATEST} for ${TARGET}..." >&2
 

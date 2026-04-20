@@ -1,7 +1,7 @@
 {
   "name": "twitter-mcp",
   "description": "Twitter/X \u2014 news search, Grok AI synthesis, post analytics, personal timeline, bookmarks. Read-only.",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "author": {
     "name": "digibugcat"
   },

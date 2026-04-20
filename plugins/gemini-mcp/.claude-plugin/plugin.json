@@ -1,7 +1,7 @@
 {
   "name": "gemini-mcp",
   "description": "Gemini \u2014 grounded web search and Q&A with stateful conversations. Auto-searches Google when needed.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": {
     "name": "digibugcat"
   },
