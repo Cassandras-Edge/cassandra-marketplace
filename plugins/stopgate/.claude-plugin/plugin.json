@@ -1,7 +1,7 @@
 {
   "name": "stopgate",
   "description": "Stop hook that blocks lazy stops and returns actionable directives. Uses an Opus LLM call to classify whether the assistant actually finished its task.",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "author": {
     "name": "digibugcat"
   },
@@ -28,11 +28,6 @@
     "SessionStart": [
       {
         "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-cass.sh",
-            "timeout": 30
-          },
           {
             "type": "command",
             "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-patched-cli.sh",

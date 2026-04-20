@@ -12,7 +12,7 @@
       "name": "stopgate",
       "source": "./plugins/stopgate",
       "description": "Stop hook that blocks lazy stops and returns actionable directives.",
-      "version": "0.3.3",
+      "version": "0.3.4",
       "category": "productivity",
       "keywords": [
         "hooks",
@@ -36,7 +36,7 @@
       "name": "gateway-mcp",
       "source": "./plugins/gateway-mcp",
       "description": "Cassandra Gateway \u2014 execute any platform tool via sandboxed Python.",
-      "version": "0.1.4",
+      "version": "0.2.0",
       "category": "mcp",
       "keywords": [
         "mcp",
@@ -48,7 +48,7 @@
       "name": "market-research",
       "source": "./plugins/market-research",
       "description": "Financial market data \u2014 stocks, SEC filings, macro, options, earnings.",
-      "version": "0.1.4",
+      "version": "0.2.0",
       "category": "mcp",
       "keywords": [
         "mcp",
@@ -60,7 +60,7 @@
       "name": "twitter-mcp",
       "source": "./plugins/twitter-mcp",
       "description": "Twitter/X \u2014 news search, Grok AI, post analytics, personal timeline.",
-      "version": "0.1.6",
+      "version": "0.2.0",
       "category": "mcp",
       "keywords": [
         "mcp",
@@ -72,7 +72,7 @@
       "name": "reddit-mcp",
       "source": "./plugins/reddit-mcp",
       "description": "Reddit \u2014 search, subreddit browsing, post + comment reading.",
-      "version": "0.1.4",
+      "version": "0.2.0",
       "category": "mcp",
       "keywords": [
         "mcp",
@@ -84,7 +84,7 @@
       "name": "claudeai-mcp",
       "source": "./plugins/claudeai-mcp",
       "description": "claude.ai \u2014 conversations, projects, knowledge docs, artifacts.",
-      "version": "0.1.6",
+      "version": "0.2.0",
       "category": "mcp",
       "keywords": [
         "mcp",
@@ -96,7 +96,7 @@
       "name": "discord-mcp",
       "source": "./plugins/discord-mcp",
       "description": "Discord \u2014 search messages, read channels/threads/DMs, attachments.",
-      "version": "0.1.4",
+      "version": "0.2.0",
       "category": "mcp",
       "keywords": [
         "mcp",
@@ -108,7 +108,7 @@
       "name": "media-mcp",
       "source": "./plugins/media-mcp",
       "description": "YouTube/media \u2014 transcription, YouTube search, comments, Watch Later.",
-      "version": "0.1.6",
+      "version": "0.2.0",
       "category": "mcp",
       "keywords": [
         "mcp",
@@ -120,7 +120,7 @@
       "name": "gemini-mcp",
       "source": "./plugins/gemini-mcp",
       "description": "Gemini \u2014 grounded web search and Q&A with stateful conversations.",
-      "version": "0.1.4",
+      "version": "0.2.0",
       "category": "mcp",
       "keywords": [
         "mcp",
@@ -133,7 +133,7 @@
       "name": "perplexity-mcp",
       "source": "./plugins/perplexity-mcp",
       "description": "Perplexity \u2014 web search, grounded AI answers, step-by-step reasoning.",
-      "version": "0.1.4",
+      "version": "0.2.0",
       "category": "mcp",
       "keywords": [
         "mcp",
@@ -146,7 +146,7 @@
       "name": "tradingview-mcp",
       "source": "./plugins/tradingview-mcp",
       "description": "TradingView \u2014 symbol search, screener, news, economic calendar, watchlists (owner-only ACL).",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "category": "mcp",
       "keywords": [
         "mcp",

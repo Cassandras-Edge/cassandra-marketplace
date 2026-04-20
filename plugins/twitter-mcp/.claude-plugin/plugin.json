@@ -1,7 +1,7 @@
 {
   "name": "twitter-mcp",
   "description": "Twitter/X \u2014 news search, Grok AI synthesis, post analytics, personal timeline, bookmarks. Read-only.",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "author": {
     "name": "digibugcat"
   },
@@ -17,7 +17,9 @@
     "twitter-mcp": {
       "type": "http",
       "url": "https://twitter-mcp.cassandrasedge.com/mcp",
-      "headersHelper": "cass ensure-key --header twitter-mcp"
+      "headers": {
+        "Authorization": "Bearer ${user_config.mcpKey}"
+      }
     }
   },
   "hooks": {
@@ -26,16 +28,18 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-cass.sh",
-            "timeout": 30
-          },
-          {
-            "type": "command",
             "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-cookies.sh twitter",
-            "timeout": 60
+            "timeout": 5
           }
         ]
       }
     ]
+  },
+  "userConfig": {
+    "mcpKey": {
+      "type": "string",
+      "description": "MCP bearer token for this service (managed by `cass refresh-keys`).",
+      "sensitive": false
+    }
   }
 }

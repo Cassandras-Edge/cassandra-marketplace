@@ -1,7 +1,7 @@
 {
   "name": "market-research",
   "description": "Financial market data \u2014 stocks, SEC filings, macro, options, earnings. Discovery + Code Mode execution via FMP, Polygon, FRED APIs.",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "author": {
     "name": "digibugcat"
   },
@@ -16,20 +16,16 @@
     "market-research": {
       "type": "http",
       "url": "https://market-research.cassandrasedge.com/mcp",
-      "headersHelper": "cass ensure-key --header market-research"
+      "headers": {
+        "Authorization": "Bearer ${user_config.mcpKey}"
+      }
     }
   },
-  "hooks": {
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-cass.sh",
-            "timeout": 30
-          }
-        ]
-      }
-    ]
+  "userConfig": {
+    "mcpKey": {
+      "type": "string",
+      "description": "MCP bearer token for this service (managed by `cass refresh-keys`).",
+      "sensitive": false
+    }
   }
 }

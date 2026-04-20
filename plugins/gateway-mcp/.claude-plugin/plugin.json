@@ -1,7 +1,7 @@
 {
   "name": "gateway-mcp",
   "description": "Cassandra Gateway \u2014 execute any platform tool via sandboxed Python. Authenticates via WorkOS OAuth.",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "author": {
     "name": "digibugcat"
   },
@@ -15,20 +15,16 @@
     "cassandra-gateway": {
       "type": "http",
       "url": "https://gateway.cassandrasedge.com/mcp",
-      "headersHelper": "cass ensure-key --header gateway"
+      "headers": {
+        "Authorization": "Bearer ${user_config.mcpKey}"
+      }
     }
   },
-  "hooks": {
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-cass.sh",
-            "timeout": 30
-          }
-        ]
-      }
-    ]
+  "userConfig": {
+    "mcpKey": {
+      "type": "string",
+      "description": "MCP bearer token for this service (managed by `cass refresh-keys`).",
+      "sensitive": false
+    }
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "media-mcp",
   "description": "YouTube/media \u2014 transcription (GPU ASR + diarization), YouTube search, channel browsing, comments, Watch Later sync.",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "author": {
     "name": "digibugcat"
   },
@@ -16,7 +16,9 @@
     "yt-mcp": {
       "type": "http",
       "url": "https://youtube.cassandrasedge.com/mcp",
-      "headersHelper": "cass ensure-key --header yt-mcp"
+      "headers": {
+        "Authorization": "Bearer ${user_config.mcpKey}"
+      }
     }
   },
   "hooks": {
@@ -25,16 +27,18 @@
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-cass.sh",
-            "timeout": 30
-          },
-          {
-            "type": "command",
             "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-cookies.sh yt-mcp",
-            "timeout": 60
+            "timeout": 5
           }
         ]
       }
     ]
+  },
+  "userConfig": {
+    "mcpKey": {
+      "type": "string",
+      "description": "MCP bearer token for this service (managed by `cass refresh-keys`).",
+      "sensitive": false
+    }
   }
 }

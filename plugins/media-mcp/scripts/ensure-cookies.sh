@@ -1,31 +1,20 @@
 #!/usr/bin/env bash
-# Sync this service's cookies on SessionStart. Runs `cass cookies sync`
-# unconditionally so the auth service always has fresh credentials —
-# Firefox-local "ok" does not imply server-side freshness. Uses --no-open
-# so a missing-cookies state doesn't spawn a browser window. Exits 0 either
-# way so plugin load is never blocked. Pass the cass service name as $1
-# (yt-mcp, twitter, claude-ai, ...).
+# Fire-and-forget cookies sync for this plugin's service. Backgrounds the
+# `cass cookies sync` call so the SessionStart hook returns immediately —
+# cookie freshness is best-effort, not startup-critical. Output goes to
+# a per-service log under the plugin data dir for post-hoc inspection.
+# Pass the cass service name as $1 (yt-mcp, twitter, claude-ai).
 
 set -euo pipefail
 
 SERVICE="${1:-}"
-if [ -z "$SERVICE" ]; then
-  echo "ensure-cookies.sh: missing service argument" >&2
-  exit 0
-fi
+[ -z "$SERVICE" ] && exit 0
+command -v cass >/dev/null 2>&1 || exit 0
 
-# cass may not be on PATH yet (ensure-cass.sh runs in parallel on first
-# install). Skip silently — next session will sync.
-if ! command -v cass >/dev/null 2>&1; then
-  exit 0
-fi
+LOG_DIR="${CLAUDE_PLUGIN_DATA:-$HOME/.cache/cass-bootstrap}"
+mkdir -p "$LOG_DIR"
+LOG="${LOG_DIR}/cookies-sync-${SERVICE}.log"
 
-output=$(cass cookies sync "$SERVICE" --no-open 2>&1 || true)
-
-# Surface the outcome line so the user sees what happened. Looks for the
-# last action line printed by `cass cookies sync` (Synced / No cookies /
-# INVALID / Valid / Dry).
-action=$(printf '%s\n' "$output" | awk '/^  (Synced|No cookies|Cookies|INVALID|Valid|Dry)/ {last=$0} END {print last}')
-if [ -n "$action" ]; then
-  echo "  ${SERVICE}:${action#  }" >&2
-fi
+nohup cass cookies sync "$SERVICE" --no-open >"$LOG" 2>&1 </dev/null &
+disown 2>/dev/null || true
+exit 0
