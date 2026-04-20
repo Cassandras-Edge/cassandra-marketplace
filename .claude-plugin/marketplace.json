@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Plugins from the Cassandra platform",
-    "version": "0.5.0"
+    "version": "0.6.0"
   },
   "plugins": [
     {
@@ -140,6 +140,20 @@
         "perplexity",
         "search",
         "research"
+      ]
+    },
+    {
+      "name": "tradingview-mcp",
+      "source": "./plugins/tradingview-mcp",
+      "description": "TradingView \u2014 symbol search, screener, news, economic calendar, watchlists (owner-only ACL).",
+      "version": "0.1.0",
+      "category": "mcp",
+      "keywords": [
+        "mcp",
+        "tradingview",
+        "finance",
+        "stocks",
+        "charts"
       ]
     }
   ]

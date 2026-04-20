@@ -1,0 +1,36 @@
+{
+  "name": "tradingview-mcp",
+  "description": "TradingView \u2014 symbol search, screener, news, economic calendar, watchlists. Single-egress proxy on a TradingView Pro account (owner-only ACL).",
+  "version": "0.1.0",
+  "author": {
+    "name": "digibugcat"
+  },
+  "license": "MIT",
+  "keywords": [
+    "mcp",
+    "tradingview",
+    "finance",
+    "stocks",
+    "charts"
+  ],
+  "mcpServers": {
+    "tradingview-mcp": {
+      "type": "http",
+      "url": "https://tradingview-mcp.cassandrasedge.com/mcp",
+      "headersHelper": "cass ensure-key --header tradingview-mcp"
+    }
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-cass.sh",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
