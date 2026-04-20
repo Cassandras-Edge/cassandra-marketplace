@@ -1,7 +1,7 @@
 {
   "name": "gateway-mcp",
   "description": "Cassandra Gateway \u2014 execute any platform tool via sandboxed Python. Authenticates via WorkOS OAuth.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": {
     "name": "digibugcat"
   },
@@ -23,6 +23,7 @@
   "userConfig": {
     "mcpKey": {
       "type": "string",
+      "title": "MCP bearer token",
       "description": "MCP bearer token for this service (managed by `cass refresh-keys`).",
       "sensitive": false
     }

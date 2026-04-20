@@ -1,7 +1,7 @@
 {
   "name": "perplexity-mcp",
   "description": "Perplexity \u2014 web search, grounded AI answers, step-by-step reasoning. No credentials needed.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": {
     "name": "digibugcat"
   },
@@ -24,6 +24,7 @@
   "userConfig": {
     "mcpKey": {
       "type": "string",
+      "title": "MCP bearer token",
       "description": "MCP bearer token for this service (managed by `cass refresh-keys`).",
       "sensitive": false
     }

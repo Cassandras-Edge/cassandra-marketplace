@@ -1,7 +1,7 @@
 {
   "name": "claudeai-mcp",
   "description": "claude.ai \u2014 conversations, projects, knowledge docs, artifacts. Read + write via synced browser cookies.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": {
     "name": "digibugcat"
   },
@@ -37,6 +37,7 @@
   "userConfig": {
     "mcpKey": {
       "type": "string",
+      "title": "MCP bearer token",
       "description": "MCP bearer token for this service (managed by `cass refresh-keys`).",
       "sensitive": false
     }

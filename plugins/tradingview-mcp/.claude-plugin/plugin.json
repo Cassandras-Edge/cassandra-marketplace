@@ -1,7 +1,7 @@
 {
   "name": "tradingview-mcp",
   "description": "TradingView \u2014 symbol search, screener, news, economic calendar, watchlists. Single-egress proxy on a TradingView Pro account (owner-only ACL).",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": {
     "name": "digibugcat"
   },
@@ -25,6 +25,7 @@
   "userConfig": {
     "mcpKey": {
       "type": "string",
+      "title": "MCP bearer token",
       "description": "MCP bearer token for this service (managed by `cass refresh-keys`).",
       "sensitive": false
     }
