@@ -155,6 +155,20 @@
         "stocks",
         "charts"
       ]
+    },
+    {
+      "name": "routines-mcp",
+      "source": "./plugins/routines-mcp",
+      "description": "Cassandra Routines \u2014 manage + fire autonomous Claude Code routines, inspect past runs (owner-only ACL).",
+      "version": "0.1.0",
+      "category": "mcp",
+      "keywords": [
+        "mcp",
+        "routines",
+        "automation",
+        "cron",
+        "agents"
+      ]
     }
   ]
 }
