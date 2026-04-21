@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Plugins from the Cassandra platform",
-    "version": "0.6.0"
+    "version": "0.7.0"
   },
   "plugins": [
     {
@@ -168,6 +168,20 @@
         "automation",
         "cron",
         "agents"
+      ]
+    },
+    {
+      "name": "schwab-mcp",
+      "source": "./plugins/schwab-mcp",
+      "description": "Charles Schwab \u2014 per-user brokerage data (quotes, accounts, positions, balances). Auto-prompts for re-auth at session start (owner-only ACL).",
+      "version": "0.1.0",
+      "category": "mcp",
+      "keywords": [
+        "mcp",
+        "schwab",
+        "finance",
+        "stocks",
+        "brokerage"
       ]
     }
   ]

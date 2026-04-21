@@ -1,0 +1,46 @@
+{
+  "name": "schwab-mcp",
+  "description": "Charles Schwab \u2014 per-user account data (quotes, accounts, positions, balances). Owner-only ACL; tokens stored encrypted in the broker. Auto-prompts for re-auth at session start when the token is stale.",
+  "version": "0.1.0",
+  "author": {
+    "name": "digibugcat"
+  },
+  "license": "MIT",
+  "keywords": [
+    "mcp",
+    "schwab",
+    "finance",
+    "stocks",
+    "brokerage"
+  ],
+  "mcpServers": {
+    "schwab-mcp": {
+      "type": "http",
+      "url": "https://schwab.cassandrasedge.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${user_config.mcpKey}"
+      }
+    }
+  },
+  "userConfig": {
+    "mcpKey": {
+      "type": "string",
+      "title": "MCP bearer token",
+      "description": "MCP bearer token for this service (managed by `cass refresh-keys`).",
+      "sensitive": false
+    }
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'command -v cass >/dev/null 2>&1 && cass auth status --service schwab --if-needed --quiet || true'",
+            "timeout": 300
+          }
+        ]
+      }
+    ]
+  }
+}
