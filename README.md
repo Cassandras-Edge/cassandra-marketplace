@@ -30,6 +30,7 @@ Available plugins:
 | `discord-mcp` | MCP | Discord — search messages, read channels/threads/DMs, attachments |
 | `media-mcp` | MCP | YouTube/media — transcription, search, comments, Watch Later |
 | `cmux-mcp` | MCP (stdio) | cmux automation — spawn agents, send messages, read screens, search workspaces |
+| `cass-image` | MCP (stdio) | Image generation via ChatGPT Plus/Pro — gpt-image-2 quality, no API key (reuses Codex auth) |
 
 ## Examples
 
