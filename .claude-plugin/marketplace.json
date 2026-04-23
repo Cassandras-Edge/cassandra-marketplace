@@ -183,20 +183,6 @@
         "stocks",
         "brokerage"
       ]
-    },
-    {
-      "name": "cass-image",
-      "source": "./plugins/cass-image",
-      "description": "Image generation via ChatGPT Plus/Pro subscription \u2014 gpt-image-2 quality with no API key. Local stdio server; requires `cass` on PATH and Codex login.",
-      "version": "0.1.0",
-      "category": "mcp",
-      "keywords": [
-        "mcp",
-        "image",
-        "generation",
-        "gpt-image-2",
-        "chatgpt"
-      ]
     }
   ]
 }
