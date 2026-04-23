@@ -1,0 +1,18 @@
+{
+  "name": "cass-image",
+  "description": "Teach Claude to generate and edit images via `cass image` — a bash command that reuses your ChatGPT Plus/Pro subscription (no API key). Ships as a skill; no MCP server, no stdio round-trip.",
+  "version": "0.2.0",
+  "author": {
+    "name": "digibugcat"
+  },
+  "license": "MIT",
+  "keywords": [
+    "skill",
+    "image",
+    "generation",
+    "gpt-image",
+    "chatgpt",
+    "codex",
+    "cass"
+  ]
+}

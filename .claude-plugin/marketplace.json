@@ -183,6 +183,21 @@
         "stocks",
         "brokerage"
       ]
+    },
+    {
+      "name": "cass-image",
+      "source": "./plugins/cass-image",
+      "description": "Skill that teaches Claude to use `cass image` \u2014 a bash command that generates/edits images via your ChatGPT Plus/Pro subscription. No MCP round-trip, auto-opens the result.",
+      "version": "0.2.0",
+      "category": "skill",
+      "keywords": [
+        "skill",
+        "image",
+        "generation",
+        "chatgpt",
+        "codex",
+        "cass"
+      ]
     }
   ]
 }
