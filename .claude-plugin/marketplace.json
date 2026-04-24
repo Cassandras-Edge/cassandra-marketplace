@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Plugins from the Cassandra platform",
-    "version": "0.7.0"
+    "version": "0.8.0"
   },
   "plugins": [
     {
@@ -196,6 +196,20 @@
         "generation",
         "chatgpt",
         "codex",
+        "cass"
+      ]
+    },
+    {
+      "name": "share-convo",
+      "source": "./plugins/share-convo",
+      "description": "Skill that teaches Claude to share the current session via `cass share create` \u2014 uploads sanitized markdown to cassandra-share and copies a ready-to-paste link to the clipboard. Works for teammate handoff or pasting into any other LLM.",
+      "version": "0.1.0",
+      "category": "skill",
+      "keywords": [
+        "skill",
+        "share",
+        "teleport",
+        "handoff",
         "cass"
       ]
     }

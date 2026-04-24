@@ -1,0 +1,16 @@
+{
+  "name": "share-convo",
+  "description": "Teach Claude to share the current session via `cass share create` — uploads sanitized markdown to cassandra-share and copies a ready-to-paste link to the clipboard. Works for handoff to teammates or pasting into any other LLM.",
+  "version": "0.1.0",
+  "author": {
+    "name": "digibugcat"
+  },
+  "license": "MIT",
+  "keywords": [
+    "skill",
+    "share",
+    "teleport",
+    "handoff",
+    "cass"
+  ]
+}
