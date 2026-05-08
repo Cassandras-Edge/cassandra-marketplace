@@ -30,8 +30,15 @@ touch "$STAMP_FILE"
 
 # Public portal — overrides any localhost CASS_PORTAL_URL leaking from
 # env/schwab.local.env when this runs from a Claude Code launch context.
-CASS_PORTAL_URL="https://portal.cassandrasedge.com" \
-  nohup cass cookies refresh perplexity-mcp --timeout 30 \
-  >"$LOG" 2>&1 </dev/null &
+# Two best-effort tasks:
+#   1. Refresh Cloudflare cookies (perplexity finance scrape).
+#   2. Rotate the plugin's MCP key if it's within 7d of expiry.
+# Both fire-and-forget so the SessionStart hook stays under 5s.
+(
+  CASS_PORTAL_URL="https://portal.cassandrasedge.com"
+  export CASS_PORTAL_URL
+  cass cookies refresh perplexity-mcp --timeout 30 >>"$LOG" 2>&1 || true
+  cass refresh-keys --if-near-expiry --plugin perplexity-mcp >>"$LOG" 2>&1 || true
+) </dev/null >/dev/null 2>&1 &
 disown 2>/dev/null || true
 exit 0
