@@ -1,7 +1,7 @@
 {
   "name": "perplexity-mcp",
-  "description": "Perplexity \u2014 web search, grounded AI answers, step-by-step reasoning, plus perplexity.ai/finance scrape (Notable Price Movement narratives, quotes, analyst ratings). Owner-only finance tools require `cass cookies sync perplexity-mcp`.",
-  "version": "0.3.0",
+  "description": "Perplexity \u2014 web search, grounded AI answers, step-by-step reasoning, plus perplexity.ai/finance scrape (Notable Price Movement narratives, quotes, analyst ratings). Cookies auto-refresh on SessionStart via `cass cookies refresh`.",
+  "version": "0.4.0",
   "author": {
     "name": "digibugcat"
   },
@@ -21,6 +21,19 @@
         "Authorization": "Bearer ${user_config.mcpKey}"
       }
     }
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/ensure-cookies.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
   },
   "userConfig": {
     "mcpKey": {

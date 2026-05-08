@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Plugins from the Cassandra platform",
-    "version": "0.8.1"
+    "version": "0.8.2"
   },
   "plugins": [
     {
@@ -132,8 +132,8 @@
     {
       "name": "perplexity-mcp",
       "source": "./plugins/perplexity-mcp",
-      "description": "Perplexity \u2014 web search, grounded AI answers, step-by-step reasoning, plus perplexity.ai/finance scrape (Notable Price Movement narratives) for owner.",
-      "version": "0.3.0",
+      "description": "Perplexity \u2014 web search, grounded AI answers, step-by-step reasoning, plus perplexity.ai/finance scrape (Notable Price Movement) with SessionStart cookie refresh.",
+      "version": "0.4.0",
       "category": "mcp",
       "keywords": [
         "mcp",
