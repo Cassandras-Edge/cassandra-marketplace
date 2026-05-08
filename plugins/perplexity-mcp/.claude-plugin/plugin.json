@@ -1,7 +1,7 @@
 {
   "name": "perplexity-mcp",
-  "description": "Perplexity \u2014 web search, grounded AI answers, step-by-step reasoning. No credentials needed.",
-  "version": "0.2.1",
+  "description": "Perplexity \u2014 web search, grounded AI answers, step-by-step reasoning, plus perplexity.ai/finance scrape (Notable Price Movement narratives, quotes, analyst ratings). Owner-only finance tools require `cass cookies sync perplexity-mcp`.",
+  "version": "0.3.0",
   "author": {
     "name": "digibugcat"
   },
@@ -10,7 +10,8 @@
     "mcp",
     "perplexity",
     "search",
-    "research"
+    "research",
+    "finance"
   ],
   "mcpServers": {
     "perplexity-mcp": {
